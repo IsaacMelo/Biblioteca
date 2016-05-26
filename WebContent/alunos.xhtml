@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="system.xhtml">
+	<ui:define name="content">
+			<h:form>
+				<p:dataTable var="lista" value="#{alunoController.listarAlunos()}"
+					id="dataTableEmpresa" rows="10" paginatorAlwaysVisible="false"
+					paginator="true" paginatorPosition="bottom"
+					emptyMessage="Nenhum registro encontrado." style="margin:0px;">
+					<f:facet name="header">Alunos Cadastrados</f:facet>
+					<p:column headerText="ID" filterBy="#{lista.id}" sortBy="#{lista.id}">
+						<h:outputText value="#{lista.id}" />
+					</p:column>
+
+					<p:column headerText="NOME" filterBy="#{lista.nome}">
+						<h:outputText value="#{lista.nome}" />
+					</p:column>
+
+					<p:column headerText="RA" filterBy="#{lista.ra}">
+						<h:outputText value="#{lista.ra}" />
+					</p:column>
+
+					<p:column headerText="SENHA" filterBy="#{lista.senha}">
+						<h:outputText value="#{lista.senha}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+	</ui:define>
+</ui:composition>
+</html>

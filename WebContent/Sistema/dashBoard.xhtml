@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Bem-vindo!</title>
+	<link type="text/css" rel="stylesheet" href="../CSS/estilo.css"></link>
+</h:head>
+<h:body>
+	<h:form>
+		<div id="navlogo">
+			<img src="../Imagens/impacta.png" width="150px" height="100px" />
+		</div>
+		<p:growl autoUpdate="true" />
+
+		<p:panelMenu style="width:300px">
+			<p:submenu label="Livros / Revistas">
+				<p:menuitem value="Registrar itens"
+					actionListener="#{menuView.save}" icon="ui-icon-disk" />
+				<p:menuitem value="Consultar itens"
+					actionListener="#{menuView.update}" icon="ui-icon-search" />
+			</p:submenu>
+			<p:submenu label="Solicitações de empréstimo">
+				<p:menuitem value="Aprovar empréstimo"
+					actionListener="#{menuView.delete}" ajax="false"
+					icon="ui-icon-check" />
+			</p:submenu>
+			<p:separator />
+			<p:submenu label="Logout">
+				<p:menuitem value="Sair" url="http://www.primefaces.org/support"
+					icon="ui-icon-close" />
+			</p:submenu>
+		</p:panelMenu>
+	</h:form>
+
+	<div class="footer">Bem-vindo, Adminstrador</div>
+</h:body>
+</html>

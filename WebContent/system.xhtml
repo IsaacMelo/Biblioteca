@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Biblioteca</title>
+	<link type="text/css" rel="stylesheet" href="CSS/estilo.css"></link>
+</h:head>
+
+<h:body>
+	<p:layout fullPage="true">
+		<p:layoutUnit position="north" size="105">
+			<center>
+				<a href="system.xhtml">
+					<img src="Imagens/impacta.png" width="150px" height="80px" />
+				</a>
+			</center>
+		</p:layoutUnit>
+
+		<p:layoutUnit position="west">
+			
+				<p:menu toggleable="true" width="100%">
+					<p:submenu label="Itens">
+						<p:menuitem value="Cadastrar Itens" url="" />
+						<p:menuitem value="Consultar Itens" url="" />
+					</p:submenu>
+					<p:submenu label="Empréstimos">
+						<p:menuitem value="Em Análise" url="" />
+						<p:menuitem value="Atraso" url="" />
+					</p:submenu>
+					<p:submenu label="Alunos">
+						<p:menuitem value="Cadastrar Aluno" url="cadastro_aluno.xhtml" />
+						<p:menuitem value="Alunos" url="alunos.xhtml" />
+					</p:submenu>
+					<p:submenu label="Funcionários">
+						<p:menuitem value="Cadastrar Funcionário" url="cadastro_funcionarios.xhtml" />
+						<p:menuitem value="Funcionários" url="funcionarios.xhtml" />
+					</p:submenu>
+					<p:submenu label="Logout">
+						<p:menuitem value="Sair"
+							url="" />
+					</p:submenu>
+				</p:menu>
+			
+		</p:layoutUnit>
+
+		<p:layoutUnit position="center">
+			<ui:insert name="content">
+				<ui:include src="cadastro_aluno.xhtml"/>
+			</ui:insert>
+		</p:layoutUnit>
+	</p:layout>
+
+</h:body>
+</html>
