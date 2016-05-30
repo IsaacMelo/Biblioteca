@@ -1,31 +1,35 @@
 package br.com.impacta.controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.model.DataModel;
-import javax.faces.model.ListDataModel;
+import javax.faces.view.ViewScoped;
 
-import org.primefaces.component.datatable.DataTable;
 
 import br.com.impacta.dao.AlunoDAO;
 import br.com.impacta.model.Aluno;
 
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class AlunoController implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
-	private Aluno aluno;
-	private DataModel<Aluno> listaAlunos;
 	
+	private static final long serialVersionUID = 1L;
+	private String pesquisa;
+	private Aluno aluno;
+	private List<Aluno> listaAlunos;
+	private Aluno alunoSelecionado;
+
+
+	public void setPesquisa(String pesquisa) {
+		this.pesquisa = pesquisa;
+	}
+
 	public Aluno getAluno() {
 		return aluno;
 	}
@@ -34,47 +38,48 @@ public class AlunoController implements Serializable {
 		this.aluno = aluno;
 	}
 
-	public AlunoController(){
+	public List<Aluno> getListaAlunos() {
+		listaAlunos = consultar();
+		return listaAlunos;
+	}
+
+
+	public Aluno getAlunoSelecionado() {
+		return alunoSelecionado;
+	}
+
+	public void setAlunoSelecionado(Aluno alunoSelecionado) {
+		this.alunoSelecionado = alunoSelecionado;
+	}
+	
+	public List<Aluno> consultar(){
+		AlunoDAO dao = AlunoDAO.getInstance();
+		return dao.consulta();
+	}
+	
+	public void pesquisar(){
+		AlunoDAO dao = AlunoDAO.getInstance();
+		this.listaAlunos = dao.pesquisar(this.pesquisa);
+	}
+	
+	public void salvar(){
+		AlunoDAO dao = AlunoDAO.getInstance();
+		dao.salvar(this.aluno);
+		System.out.println(this.aluno);
+		Mensagem msg = new Mensagem();
+		dao.consulta();
+		msg.info("Aluno salvo com sucesso!");
+	}
+	
+	public void remover(){
+		AlunoDAO dao = AlunoDAO.getInstance();
+		dao.remover(this.aluno);
+		Mensagem msg = new Mensagem();
+		dao.consulta();
+		msg.info("Aluno removido com sucesso!");
+	}
+	
+	public void novoAluno(){
 		this.aluno = new Aluno();
 	}
-	
-	public void removerAluno(){
-		AlunoDAO dao = AlunoDAO.getInstance();
-		dao.remove(aluno);		
-	}
-	
-	public void alterarAluno(){
-		AlunoDAO dao = AlunoDAO.getInstance();
-		dao.altera(aluno);		
-	}
-	
-	public String cadastrarAluno (){
-		try{
-			AlunoDAO dao = AlunoDAO.getInstance();
-			dao.adiciona(aluno);
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Sucesso!","Aluno cadastrado com sucesso"));
-			aluno=null;
-			return "cadastro_aluno.xhtml";	
-		}
-		catch(RuntimeException e){
-			
-		}
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Erro!","Aconteceu um erro ao cadastrar"));
-		return "cadastro_aluno.xhtml";
-	}
-	
-	public DataModel<Aluno> listarAlunos(){
-		AlunoDAO dao =AlunoDAO.getInstance();
-		listaAlunos = new ListDataModel<Aluno>(dao.getLista());
-		return listaAlunos;
-	}
-
-	public DataModel<Aluno> getListaAlunos() {
-		return listaAlunos;
-	}
-
-	public void setListaAlunos(DataModel<Aluno> listaAlunos) {
-		this.listaAlunos = listaAlunos;
-	}
-	
 }

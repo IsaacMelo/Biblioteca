@@ -4,13 +4,18 @@ import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+
+import org.hibernate.mapping.Selectable;
+
 import br.com.impacta.dao.FuncionarioDAO;
 import br.com.impacta.model.Funcionario;
 
 @ManagedBean
+@SessionScoped
 @RequestScoped
 public class FuncionarioController implements Serializable{
 		/**
@@ -46,7 +51,7 @@ public class FuncionarioController implements Serializable{
 			FuncionarioDAO dao = FuncionarioDAO.getInstance();
 			dao.adiciona(func);	
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Sucesso!","Funcionário cadastrado com sucesso"));
-			func = null;
+			func=null;
 			return "cadastro_funcionarios.xhtml";
 		}catch(RuntimeException e){
 			

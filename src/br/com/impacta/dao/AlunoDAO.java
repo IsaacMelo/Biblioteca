@@ -7,10 +7,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import org.primefaces.component.datatable.DataTable;
-
 import br.com.impacta.model.Aluno;
-import br.com.impacta.model.Funcionario;
 
 public class AlunoDAO {
 	
@@ -37,63 +34,31 @@ public class AlunoDAO {
 		return instance;
 	}
 	
-	public void adiciona (Aluno aluno){
-		entityManager.getTransaction().begin();
-		try{
+	public boolean salvar (Aluno aluno){
+			entityManager.getTransaction().begin();
 			entityManager.persist(aluno);
 			entityManager.getTransaction().commit();
-		}catch(RuntimeException e){
-			entityManager.getTransaction().rollback();
-			System.out.println("Ocorreu um erro no banco de dados");
-		}finally{
-
-		}
+			return true;
 	}
 	
-	public void remove (Aluno aluno){
+	public boolean remover (Aluno aluno){
 		entityManager.getTransaction().begin();
-		try{
-			entityManager.remove(aluno);
-			entityManager.getTransaction().commit();
-		}catch(RuntimeException e){
-			entityManager.getTransaction().rollback();
-			System.out.println("Ocorreu um erro no banco de dados");
-		} finally{
-			
-		}
-		
-	
+		entityManager.remove(aluno);
+		entityManager.getTransaction().commit();
+		return true;
 	}
 	
-	public void altera(Aluno aluno){
-		entityManager.getTransaction().begin();
-		try{
-			entityManager.persist(aluno.getId());;
-			entityManager.getTransaction().commit();
-		}catch(RuntimeException e){
-			entityManager.getTransaction().rollback();
-			System.out.println("Ocorreu um erro no banco de dados");
-		}
-		finally{
 	
-		}
-	}
-	
-	public List<Aluno> getLista(){
+	public List<Aluno> consulta(){
 		Query query = entityManager.createQuery("SELECT a FROM Aluno as a");
 		return query.getResultList();
 	}
 	
-	public List<Aluno> getListaId(Aluno aluno){
-		Query query = entityManager.createQuery("SELECT a FROM Aluno as a WHERE id = " + aluno.getId());
+	public List<Aluno> pesquisar(String pesquisa){
+		Query query = entityManager.createQuery("SELECT a FROM Aluno as a WHERE nome LIKE %(:nome)%");
+		query.setParameter("nome", pesquisa);
 		return query.getResultList();
 	}
-	
-	public List<Aluno> login(Aluno aluno){
-		Query query = entityManager.createQuery("SELECT a FROM Aluno as a WHERE a.usuario = :ra and a.senha = :senha");
-		query.setParameter("ra",aluno.getRa() );
-		query.setParameter("senha",aluno.getSenha() );
-		return query.getResultList();
-	}
+
 
 }

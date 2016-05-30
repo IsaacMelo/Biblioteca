@@ -8,7 +8,7 @@
 <ui:composition template="index.xhtml">
 	<ui:define name="content">
 
-		<h1 style="margin: 20px 0px 0px 20px;">Cadastro Funcionários</h1>
+		<h1 style="margin: 20px 0px 0px 20px;">Cadastro Professores</h1>
 
 		<h:form style="margin-top:20px;">
 			<p:toolbar style="margin:5px 20px 0px 20px;">
@@ -38,12 +38,12 @@
 				<p:commandButton icon="ui-icon-search"/>
 			</h:panelGrid>
 
-			<p:dataTable id="tabela-funcionario" paginator="true"
+			<p:dataTable id="tabela-professores" paginator="true"
 				paginatorAlwaysVisible="true"
 				emptyMessage="Nenhum registro encontrado" rows="10"
 				paginatorPosition="bottom" style="margin:20px;">
 
-				<p:column headerText="ID">
+				<p:column headerText="RP">
 
 				</p:column>
 
@@ -58,7 +58,7 @@
 				<p:column headerText="TELEFONE">
 
 				</p:column>
-				
+
 				<p:column headerText="DATA DE NASCIMENTO">
 
 				</p:column>

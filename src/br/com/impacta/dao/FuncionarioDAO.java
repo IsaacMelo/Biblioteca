@@ -85,10 +85,10 @@ public class FuncionarioDAO {
 		return query.getResultList();
 	}
 	
-	public List<Funcionario> login(Funcionario func){
+	public List<Funcionario> login(String usuario, String senha){
 		Query query = entityManager.createQuery("SELECT f FROM Funcionario as f WHERE f.usuario = :usuario and f.senha = :senha");
-		query.setParameter("usuario",func.getUsuario() );
-		query.setParameter("senha",func.getSenha() );
+		query.setParameter("usuario",usuario);
+		query.setParameter("senha",senha );
 		return query.getResultList();
 	}
 

@@ -1,36 +1,117 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="system.xhtml">
+<ui:composition template="index.xhtml">
 	<ui:define name="content">
-			<h:form>
-				<p:dataTable var="lista" value="#{alunoController.listarAlunos()}"
-					id="dataTableEmpresa" rows="10" paginatorAlwaysVisible="false"
-					paginator="true" paginatorPosition="bottom"
-					emptyMessage="Nenhum registro encontrado." style="margin:0px;">
-					<f:facet name="header">Alunos Cadastrados</f:facet>
-					<p:column headerText="ID" filterBy="#{lista.id}" sortBy="#{lista.id}">
-						<h:outputText value="#{lista.id}" />
-					</p:column>
 
-					<p:column headerText="NOME" filterBy="#{lista.nome}">
-						<h:outputText value="#{lista.nome}" />
-					</p:column>
+		<h1 style="margin: 20px 0px 0px 20px;">Cadastro Alunos</h1>
 
-					<p:column headerText="RA" filterBy="#{lista.ra}">
-						<h:outputText value="#{lista.ra}" />
-					</p:column>
+		<h:form id="form1" style="margin-top:20px;">
+		
+		<p:messages id="principal" showIcon="true" autoUpdate="true" style="margin: 20px 20px 0px 20px;" />		
+		
+			<p:toolbar style="margin:5px 20px 0px 20px;">
+				<f:facet name="left">
+				
+					<p:commandButton value="Novo" icon="ui-icon-document"
+						style="font-size:15px;" process="@this" oncomplete="PF('aluno-dialogo').show()" 
+						actionListener="alunoController.novoAluno()">
+						<p:resetInput target="dialogo-aluno"></p:resetInput>
+					</p:commandButton>
 
-					<p:column headerText="SENHA" filterBy="#{lista.senha}">
-						<h:outputText value="#{lista.senha}" />
-					</p:column>
-				</p:dataTable>
-			</h:form>
+					<span class=" ui-separator ui-icon ui-icon-grip-dotted-vertical"></span>
+
+					<p:commandButton icon="ui-icon-pencil" style="font-size:15px;">
+					</p:commandButton>
+
+					<p:commandButton icon="ui-icon-trash" style="font-size:15px;">
+					</p:commandButton>
+
+					<p:commandButton icon="ui-icon-arrowstop-1-s
+ "
+						style="font-size:15px;">
+					</p:commandButton>
+
+				</f:facet>
+			</p:toolbar>
+			
+			<h:panelGrid columns="2" style="margin:10px 0px 0px 20px;">
+				<p:inputText placeholder="Pesquisar por nome..."/>
+				<p:commandButton icon="ui-icon-search"/>
+			</h:panelGrid>
+
+			<p:dataTable id="tabela-aluno" paginator="true"
+				paginatorAlwaysVisible="true" 
+				emptyMessage="Nenhum registro encontrado" rows="10"
+				paginatorPosition="bottom" style="margin:20px;" value="#{alunoController.listaAlunos}" var="lista">
+				<p:ajax event="rowSelect"/>			
+				
+				<p:column headerText="RA">
+					<h:outputText value="#{lista.ra}" />
+				</p:column>
+
+				<p:column headerText="NOME">
+					<h:outputText value="#{lista.nome}" />
+				</p:column>
+
+				<p:column headerText="EMAIL">
+					<h:outputText value="#{lista.email}" />
+				</p:column>
+
+				<p:column headerText="TELEFONE">
+					<h:outputText value="#{lista.telefone}" />
+				</p:column>
+
+				<p:column headerText="DATA DE NASCIMENTO">
+					<h:outputText value="#{lista.dataNascimento}" />
+				</p:column>
+
+				<p:column headerText="CURSO">
+					<h:outputText value="#{lista.curso}" />
+				</p:column>
+				
+				<p:column headerText="TIPO USUÁRIO">
+					<h:outputText value="#{lista.tipoUsuario}" />
+				</p:column>
+
+			</p:dataTable>
+	
+			<p:dialog id="dialogo-aluno" widgetVar="aluno-dialogo" resizable="false" modal="true" closeOnEscape="true">
+				<p:messages id="valida-aluno" showDetail="true" autoUpdate="true"/>
+				<h:panelGrid columns="2">
+					<p:inputText id="tipoAluno" readonly="true" value="#{alunoController.aluno.tipoUsuario}" />
+					<p:selectOneMenu id="curso">
+						<f:selectItem itemLabel="Selecione" />
+						<f:selectItem itemLabel="ADS" itemValue="ADS"/>
+						<f:selectItem itemLabel="BD" itemValue="BD"/>
+					</p:selectOneMenu>
+					
+					<p:outputLabel for="nome" value="Nome" />
+					<p:inputText id="nome" value="#{alunoController.aluno.nome}" />
+					<p:outputLabel for="email" value="Email"/>
+					<p:inputText id="email" value="#{alunoController.aluno.email}" />
+					<p:outputLabel for="telefone" value="Telefone"/>
+					<p:inputMask mask="(99) 9999-9999" id="telefone" value="#{alunoController.aluno.telefone}" />
+					<p:outputLabel for="dataNasc" value="Data de nascimento"/>
+					<p:calendar id="dataNasc" pattern="dd/MM/yyyy" value="#{alunoController.aluno.dataNascimento}">
+					</p:calendar>
+					<p:outputLabel for="senha" value="Senha" />
+					<p:password id="senha" value="#{alunoController.aluno.senha}" />			
+				</h:panelGrid>
+				<p:separator style="margin:10px;"/>
+				<p:commandButton value="Salvar" actionListener="#{alunoController.salvar}" process="dialogo-aluno" oncomplete="PF('aluno-dialogo').hide()">
+				</p:commandButton>		
+				<p:commandButton value="Cancelar" process="@this" oncomplete="PF('aluno-dialogo').hide()">
+					<p:resetInput target="dialogo-aluno"></p:resetInput>
+				</p:commandButton>	
+			</p:dialog>
+		</h:form>
 	</ui:define>
 </ui:composition>
+
+
 </html>
