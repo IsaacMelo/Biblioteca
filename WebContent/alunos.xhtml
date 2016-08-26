@@ -12,7 +12,7 @@
 				<p:dataTable var="lista" value="#{alunoController.listarAlunos()}"
 					id="dataTableEmpresa" rows="10" paginatorAlwaysVisible="false"
 					paginator="true" paginatorPosition="bottom"
-					emptyMessage="Nenhum registro encontrado." style="margin:0px;">
+					emptyMessage="Nenhum registro encontrado !!!." style="margin:0px;">
 					<f:facet name="header">Alunos Cadastrados</f:facet>
 					<p:column headerText="ID" filterBy="#{lista.id}" sortBy="#{lista.id}">
 						<h:outputText value="#{lista.id}" />
