@@ -18,6 +18,13 @@
 		
 		<p:toolbar style="margin:5px 20px 0px 20px;">
 				<f:facet name="left">
+					<p:commandButton value="Novo" icon="ui-icon-document"
+						actionListener="#{alunoBean.novoAluno}" style="font-size:15px;"
+						process="@this" update="tabela-emprestimo"
+						oncomplete="PF('aluno-dialogo').show()">
+						<p:resetInput target="dialogo-aluno" />
+					</p:commandButton>
+					
 					<p:commandButton icon="ui-icon-pencil" style="font-size:15px;">
 					</p:commandButton>
 
@@ -67,6 +74,62 @@
 				</p:column>
 
 			</p:dataTable>
+			
+			<p:dialog id="dialogo-aluno" widgetVar="aluno-dialogo"
+				header="Novo aluno" resizable="false" modal="true"
+				closeOnEscape="true">
+				
+				<p:messages id="valida-aluno" autoUpdate="true" />
+				<p:defaultCommand target="salvar" scope="dialogo-aluno"/>
+				
+				<h:panelGrid id="aluno-entrada-dados" columns="2">
+				
+					<p:outputLabel for="curso" value="Curso"/>
+					<p:selectOneMenu id="curso" value="#{alunoBean.aluno.curso}">
+						<f:selectItem itemLabel="Selecione" itemValue="" />
+						<f:selectItems value="#{alunoBean.cursos}" var="tipo"
+							itemLabel="#{tipo.descricao}" itemValue="#{tipo.descricao}" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel for="nome" value="Nome" />
+					<p:inputText id="nome" value="#{alunoBean.aluno.nome}"/>
+						
+					<p:outputLabel for="email" value="Email" />
+					<p:inputText id="email" value="#{alunoBean.aluno.email}"/>
+						
+					<p:outputLabel for="telefone" value="Telefone" />
+					<p:inputMask mask="(99) 9999-9999" id="telefone"
+						value="#{alunoBean.aluno.telefone}"/>
+						
+					<p:outputLabel for="dataNasc" value="Data de nascimento" />
+					<p:calendar id="dataNasc" pattern="dd/MM/yyyy" mask="99/99/9999"
+						value="#{alunoBean.aluno.data}">
+						<f:converter converterId="converteData"></f:converter>
+					</p:calendar>
+					
+					<p:outputLabel for="senha" value="Senha" />
+					<p:password id="senha" value="#{alunoBean.aluno.senha}"
+						match="confirmaSenha" goodLabel="Média" weakLabel="Baixa"
+						strongLabel="Forte" promptLabel="Nivel da senha" feedback="true"/>
+						
+					<p:outputLabel for="confirmaSenha" value="Confirmar senha" />
+					<p:password id="confirmaSenha" value="#{alunoBean.aluno.senha}" />
+						
+				</h:panelGrid>
+				
+				<p:separator style="margin:10px;" />
+				
+				<p:commandButton id="salvar" value="Salvar" actionListener="#{alunoBean.salvar}"
+					process="@this dialogo-aluno" update="@this tabela-emprestimo"
+					oncomplete="PF('aluno-dialogo').hide()">
+				</p:commandButton>
+				
+				<p:commandButton value="Cancelar"
+					oncomplete="PF('aluno-dialogo').hide()">
+					<p:resetInput target="dialogo-aluno"></p:resetInput>
+				</p:commandButton>
+				
+			</p:dialog>
 
 		</h:form>
 	</ui:define>
