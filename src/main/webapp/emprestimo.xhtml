@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<!-- 
+		Replace path to template, title, header and body
+		with actual data.
+	 -->
+<ui:composition template="index.xhtml">
+	<ui:define name="content">
+
+		<h1 style="margin: 20px 0px 0px 20px;">Empréstimos</h1>
+
+		<h:form style="margin-top:20px;">
+		
+		<p:toolbar style="margin:5px 20px 0px 20px;">
+				<f:facet name="left">
+					<p:commandButton icon="ui-icon-pencil" style="font-size:15px;">
+					</p:commandButton>
+
+					<p:commandButton icon="ui-icon-arrowstop-1-s"
+						style="font-size:15px;">
+					</p:commandButton>
+
+				</f:facet>
+			</p:toolbar>
+			
+			<h:panelGrid columns="2" style="margin:10px 0px 0px 20px;">
+				<p:inputText placeholder="Pesquisar por status..."/>
+				<p:commandButton icon="ui-icon-search"/>
+			</h:panelGrid>
+
+			<p:dataTable id="tabela-emprestimo" paginator="true"
+				paginatorAlwaysVisible="true"
+				emptyMessage="Nenhum registro encontrado" rows="10"
+				paginatorPosition="bottom" style="margin:20px;">
+
+				<p:column headerText="CÓDIGO">
+
+				</p:column>
+
+				<p:column headerText="SOLICITANTE">
+
+				</p:column>
+
+				<p:column headerText="CÓDIGO ITEM">
+
+				</p:column>
+
+				<p:column headerText="ITEM">
+
+				</p:column>
+
+				<p:column headerText="DATA DE SOLICITAÇÃO">
+
+				</p:column>
+
+				<p:column headerText="DATA DE DEVOLUÇÃO">
+
+				</p:column>
+				
+				<p:column headerText="STATUS">
+
+				</p:column>
+
+			</p:dataTable>
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+
+</html>
